@@ -5,17 +5,13 @@ import java.util.Scanner;
 public class SingleNumber {
 
 	public int SingleNumber(int [] nums) {
-		int[] count = new int[nums.length + 1];
+		int result = 0;
 		//loop through nums, count each number
 		for (int i = 0; i < nums.length; i++) {
-			count[nums[i]]++; //nums[i] is the index into count
-		}
-		for (int i = 0; i < count.length; i++) {
-			if (count[i] == 1) {
-				return i;
-			}
-		}
-		return -1;
+			result ^= nums[i];
+			
+	}
+		return result;
 	}
 
 	public static void main(String[] args) {
