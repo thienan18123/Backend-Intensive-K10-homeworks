@@ -21,6 +21,7 @@ public class maxValue {
 		maxValue m = new maxValue();
 		System.out.println(m.solution(new int[] {4, 1, 2, 3}));
 		System.out.println(m.solution(new int[] {1000000000, 1, 2, 300000000}));
+		System.out.println(m.solution(new int[] {10, 3, 20, 1}));
 
 	}
 
