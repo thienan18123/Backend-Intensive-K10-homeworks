@@ -31,9 +31,9 @@ public class smallestIndex {
 
 	public static void main(String[] args) {
 		smallestIndex s = new smallestIndex();
-		System.out.println(s.solution(new int[] {2,2,0,1}));
-		System.out.println(s.solution(new int[] {2,2,0,1,3}));
-		System.out.println(s.solution(new int[] {2,2,1,3}));
+		System.out.println(s.solution(new int[] {2,0,1,1,2,0}));
+		System.out.println(s.solution(new int[] {2,1,3,0,2,3,0}));
+		System.out.println(s.solution(new int[] {2,1,3,2}));
 
 	}
 
