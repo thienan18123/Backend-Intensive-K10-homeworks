@@ -1,6 +1,6 @@
 package baitapweek5;
 
-public class zeroArray {
+public class ZeroArray {
 
 	static void pushZerosToEnd(int[] arr) {
         int j =0;

@@ -2,7 +2,7 @@ package baitapweek5;
 
 import java.util.HashSet;
 
-public class duplicateArray {
+public class DuplicateArray {
 //	public static int removeDuplicates(int[] arr) {
 //        
 //        // To track seen elements
