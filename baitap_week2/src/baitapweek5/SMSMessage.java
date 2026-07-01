@@ -5,7 +5,7 @@ public class SMSMessage {
 		int messages = 0;
 		int currentLength = 0;
 		
-		String[] words = S.split(" ");
+		String[] words = S.split(" "); //O(n)
 		
 		for (String word : words) {
 			if (word.length() > K) {
@@ -14,7 +14,7 @@ public class SMSMessage {
 			
 		}
 		
-		
+		//0(n)
 		//greedy
 		int needed =0;
 		for (String word : words) {
@@ -40,7 +40,8 @@ public class SMSMessage {
 		
 		SMSMessage message = new SMSMessage();
 		
-		System.out.print(message.solution("SMS messages are really short", 12));
+		System.out.println(message.solution("SMS messages are really short", 12));
+		System.out.println(message.solution("toi that la tuyet", 7));
 
 	}
 
