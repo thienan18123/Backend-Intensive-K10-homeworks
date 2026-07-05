@@ -7,7 +7,7 @@ public class FrogJump {
 	public static int solution(int[] A) {
 		
 	
-	//O(nlogn)- Breadth first search
+	
 	
 	//fibonacci
 	int[] fib =  new int[26];
@@ -26,9 +26,9 @@ public class FrogJump {
 	
 	
 	while (!queue.isEmpty()) {
-		int[] curr = queue.poll();
-		int pos = curr[0];
-		int jumps = curr[1];
+		int[] current = queue.poll();
+		int pos = current[0];
+		int jumps = current[1];
 		
 		for (int i = 0; i < fs; i++) {
 			int path = pos + fib[i];
