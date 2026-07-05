@@ -15,7 +15,6 @@ public class SMSMessage {
 		}
 		
 		//0(n)
-		//greedy
 		int needed =0;
 		for (String word : words) {
 			if (currentLength <= 0) {

@@ -58,7 +58,7 @@ public class DominatorValue {
 
 	public static void main(String[] args) {
 		
-		int[] A = {3,3,3,3,3,3,1};
+		int[] A = {3,3,3,2,3,3,1};
 		
 		DominatorValue dominator = new DominatorValue();
 		
