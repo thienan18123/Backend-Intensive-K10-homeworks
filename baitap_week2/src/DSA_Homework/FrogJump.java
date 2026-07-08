@@ -25,12 +25,12 @@ public class FrogJump {
 	
 	//setup
 	boolean[] visited = new boolean[A.length];
-	List<int[]> queue = new ArrayList<>();
-	queue.add(new int[] {-1,0}); 
+	List<int[]> list = new ArrayList<>();
+	list.add(new int[] {-1,0}); 
 	
 	//logic
 	while (!queue.isEmpty()) {
-		int[] current = queue.remove(0);
+		int[] current = list.remove(0);
 		
 		int frogPos = current[0];
 		int jumps = current[1];
@@ -45,7 +45,7 @@ public class FrogJump {
 			}
 			if (frogPath < A.length && A[frogPath] == 1 && !visited[frogPath]) { 
 				visited[frogPath] = true;
-				queue.add(new int[] {frogPath, jumps + 1});
+				list.add(new int[] {frogPath, jumps + 1});
 			}
 		}
 		}
