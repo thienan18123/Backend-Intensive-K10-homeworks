@@ -29,7 +29,7 @@ public class FrogJump {
 	list.add(new int[] {-1,0}); 
 	
 	//logic
-	while (!queue.isEmpty()) {
+	while (!list.isEmpty()) {
 		int[] current = list.remove(0);
 		
 		int frogPos = current[0];

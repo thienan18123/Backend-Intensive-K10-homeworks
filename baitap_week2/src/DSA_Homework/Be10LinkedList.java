@@ -18,7 +18,7 @@ public class Be10LinkedList {
 
    
     void addAtIndex(Be10LinkedListItem item, int index) {
-z
+
         if (index == 0) {
             item.next = head;   
             head = item;        
