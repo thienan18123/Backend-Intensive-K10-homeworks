@@ -1,4 +1,4 @@
-package baiTapWeek3;
+package DSA_Homework;
 
 public class maxValue {
 

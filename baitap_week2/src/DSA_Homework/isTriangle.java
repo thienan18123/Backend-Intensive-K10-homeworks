@@ -1,4 +1,4 @@
-package baitap_week4;
+package DSA_Homework;
 import java.util.Arrays;
 
 public class isTriangle {

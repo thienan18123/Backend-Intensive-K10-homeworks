@@ -1,4 +1,4 @@
-package DSA_Homework;
+package data_structure;
 
 public class Be10LinkedListItem {
     public int value;               // giá trị lưu trong node

@@ -1,5 +1,4 @@
-package DSA_Homework;
-
+package data_structure;
 
 public class Be10Main {
 

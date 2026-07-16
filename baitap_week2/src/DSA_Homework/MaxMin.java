@@ -1,4 +1,4 @@
-package baitap_week2;
+package DSA_Homework;
 
 import java.util.Scanner;
 
