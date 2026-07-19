@@ -1,4 +1,4 @@
-package data_structure.LinkedList;
+package DataStructure.LinkedList;
 
 public class BE10LinkedList {
 	public BE10LinkedListItem head;   // node đầu

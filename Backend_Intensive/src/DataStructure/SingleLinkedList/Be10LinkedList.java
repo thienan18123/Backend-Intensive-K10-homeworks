@@ -1,4 +1,4 @@
-package SingleLinkedList;
+package DataStructure.SingleLinkedList;
 
 
 
