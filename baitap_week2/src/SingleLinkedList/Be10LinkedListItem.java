@@ -1,4 +1,4 @@
-package data_structure;
+package SingleLinkedList;
 
 public class Be10LinkedListItem {
     public int value;               // giá trị lưu trong node

@@ -1,4 +1,6 @@
-package data_structure;
+package SingleLinkedList;
+
+
 
 public class Be10LinkedList {
     public Be10LinkedListItem head;   

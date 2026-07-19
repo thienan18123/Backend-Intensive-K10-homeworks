@@ -7,16 +7,16 @@ public class trainTicket {
 			return 0;
 		}
 		
-		boolean[] travel = new boolean[31];
+		boolean[] travelDays = new boolean[31];
 		for (int day: Dates) {
-			travel[day] = true;
+			travelDays[day] = true;
 		}
 		
 		int[]dp = new int[31];
 		dp[0] = 0;
 		
 		for (int i = 1; i <= 30; i ++) {
-			if (!travel[i]) {
+			if (!travelDays[i]) {
 				dp[i] = dp[i -1];
 			} else {
 				dp[i] = Math.min(dp[i - 1] + 2, Math.min(dp[Math.max(0, i - 7)] + 7, dp[Math.max(0, i - 30)] + 25));
@@ -27,7 +27,7 @@ public class trainTicket {
 	}
 
 	public static void main(String[] args) {
-		int[] testDates = {1,2,4,5,7,29,30};
+		int[] testDates = {1,2,4,5,7,30};
 		
 		System.out.print(solution(testDates));
 
