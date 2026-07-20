@@ -4,5 +4,5 @@
 /**
  * 
  */
-module baitap_week2 {
+module Backend_Intensive {
 }

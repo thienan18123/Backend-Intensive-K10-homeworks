@@ -21,8 +21,8 @@ public class BE10Main {
         tree.addAfter(12, 125);
         System.out.println(tree.bfs(125).value);    // 125
 
-        // Test DFS (sau khi em viết xong)
-        // System.out.println(tree.dfs(120).value); // 120
+        //dfs
+        System.out.println(tree.dfs(120).value); // 120
     }
     
 }

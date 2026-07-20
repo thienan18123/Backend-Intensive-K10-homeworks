@@ -16,7 +16,7 @@ public class BE10Tree {
             BE10TreeNode node = queue.poll();      // lấy từ ĐẦU (FIFO)
 
             if (node.value == value) {
-                return node;                        // tìm thấy
+                return node;                        
             }
 
             for (BE10TreeNode child : node.children) {
@@ -28,7 +28,23 @@ public class BE10Tree {
     }
 
     public BE10TreeNode dfs(int val) {
-        // ← EM TỰ VIẾT
+        return dfsHelper(root, val);
+    }
+
+    private BE10TreeNode dfsHelper(BE10TreeNode node, int val){
+        if (node == null) {
+            return null;
+        }
+        if (node.value == val) {
+            return node;
+        }
+
+        for (BE10TreeNode child : node.children) {
+            BE10TreeNode found = dfsHelper(child, val);
+            if (found != null) {
+                return found;
+            }
+        }
         return null;
     }
 
