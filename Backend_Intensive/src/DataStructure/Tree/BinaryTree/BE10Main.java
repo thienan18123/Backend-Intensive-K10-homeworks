@@ -1,8 +1,4 @@
 package DataStructure.Tree.BinaryTree;
-
-
-
-
 public class BE10Main {
     public static void main(String[] args) {
         //Balanced Tree
