@@ -16,11 +16,11 @@ public class ParkingMain {
         // Tìm xe
         System.out.println("Car 51B-456 is in: " + lot.findCar("51B-456"));
 
-        // Rời xe giữa chừng
+        // Lấy xe
         lot.leave("51B-456");
         lot.printStatus();
 
-        // Đỗ xe mới → tái dùng chỗ vừa trả
+        // Đỗ xe mới, tái dùng chỗ vừa trả
         lot.park(new Car("51D-999"));
         lot.printStatus();
 
