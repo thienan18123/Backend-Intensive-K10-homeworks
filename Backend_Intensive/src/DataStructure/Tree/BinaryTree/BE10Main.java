@@ -14,5 +14,17 @@ public class BE10Main {
         bst.root.right.right.left = new BE10BinaryTreeNode(13);
 
         System.out.println(bst.searchBST(6).value);
+
+        //binary tree thường
+        BE10BinaryTree tree =  new BE10BinaryTree();
+         tree.root = new BE10BinaryTreeNode(1);
+        tree.root.left = new BE10BinaryTreeNode(9);
+        tree.root.right = new BE10BinaryTreeNode(4);
+        tree.root.left.left = new BE10BinaryTreeNode(2);
+        tree.root.left.right = new BE10BinaryTreeNode(7);
+        tree.root.right.left = new BE10BinaryTreeNode(5);
+
+        System.out.println("dfs(5)  : " + (tree.dfs(5).value));    // 5
+        System.out.println("bfs(7)  : " + (tree.bfs(7).value));    // 7
     }
 }
