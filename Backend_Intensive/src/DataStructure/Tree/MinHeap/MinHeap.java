@@ -70,6 +70,22 @@ public class MinHeap {
             i = smallest;                   //tương tự bubbleUp, nhưng đi XUỐNG
         }
     }
+
+    public static void main(String[] args) {
+        MinHeap h = new MinHeap(10);
+        h.addNode(new Node(5));
+        h.addNode(new Node(3));
+        h.addNode(new Node(8));
+        h.addNode(new Node(1));
+        h.addNode(new Node(9));
+
+        System.out.println(h.removeMinNode().value);   
+        System.out.println(h.removeMinNode().value);   
+        System.out.println(h.removeMinNode().value);   
+        System.out.println(h.removeMinNode().value);   
+        System.out.println(h.removeMinNode().value);   
+               
+    }
     
     
 }
