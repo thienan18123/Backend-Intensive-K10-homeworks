@@ -1,4 +1,4 @@
-package SystemDesign.Parking.SnakeGame;
+package SystemDesign.SnakeGame;
 
 import java.util.Objects;
 

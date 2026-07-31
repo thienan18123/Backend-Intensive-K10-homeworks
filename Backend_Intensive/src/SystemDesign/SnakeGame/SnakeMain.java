@@ -1,4 +1,4 @@
-package SystemDesign.Parking.SnakeGame;
+package SystemDesign.SnakeGame;
 
 
 public class SnakeMain {

@@ -1,4 +1,4 @@
-package SystemDesign.Parking.SnakeGame;
+package SystemDesign.SnakeGame;
 
 import java.util.LinkedList;
 import java.util.HashSet;
