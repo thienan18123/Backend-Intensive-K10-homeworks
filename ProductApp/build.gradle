@@ -1,0 +1,26 @@
+plugins {
+    id 'war'
+    id 'eclipse-wtp'
+}
+
+group = 'com.demo'
+version = '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly    'jakarta.servlet:jakarta.servlet-api:6.1.0'   
+    implementation 'org.json:json:20250517'                    
+}
+
+war {
+    archiveFileName = 'ProductApp.war'
+}
