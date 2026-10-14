@@ -43,7 +43,7 @@ public class ProductDao {
 
         for (int i = 0; i < docs.length(); i++) {
             JSONObject doc = docs.getJSONObject(i);
-            String path = doc.getString("name");                  // .../documents/products/abc123
+            String path = doc.getString("name");                  
             String id = path.substring(path.lastIndexOf('/') + 1);
 
             JSONObject fields = doc.optJSONObject("fields");

@@ -17,10 +17,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly    'jakarta.servlet:jakarta.servlet-api:6.1.0'   
-    implementation 'org.json:json:20250517'                    
+     providedCompile 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+
+  
+    implementation 'org.json:json:20250517'
+
+    
+    implementation('jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0') {
+        exclude group: 'jakarta.servlet'
+        exclude group: 'jakarta.el'
+    }
+    implementation('org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1') {
+        exclude group: 'jakarta.servlet'
+        exclude group: 'jakarta.el'
+    }
 }
 
 war {
     archiveFileName = 'ProductApp.war'
+}
+
+eclipse {
+    wtp {
+        facet {
+            facets = []                                      
+            facet name: 'jst.java', version: '21'            
+            facet name: 'jst.web',  version: '6.0'           
+        }
+    }
 }
