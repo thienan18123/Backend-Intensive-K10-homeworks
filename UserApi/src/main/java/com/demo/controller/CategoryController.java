@@ -19,14 +19,14 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Integer id = parseId(req.getParameter("id"));     // /category?id=7
+        Integer id = parseId(req.getParameter("id"));    
         try {
             Category category = (id == null) ? null : newsService.getCategory(id);
             if (category == null) {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            // Parent is used for the "back" link; null for a top-level category
+         
             Category parent = (category.getParentId() == null) ? null
                     : newsService.getCategory(category.getParentId());
 
@@ -40,7 +40,7 @@ public class CategoryController extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/category.jsp").forward(req, resp);
     }
 
-    /** "7" -> 7; missing or not a number -> null. */
+  
     private static Integer parseId(String value) {
         try {
             return Integer.valueOf(value);

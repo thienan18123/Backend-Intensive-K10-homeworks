@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ArticleDao {
 
-    /** All articles that belong directly to one category, newest first. */
+    
     public List<Article> findByCategory(int categoryId) throws SQLException {
         String sql = "SELECT id, category_id, title, summary, content FROM articles "
                    + "WHERE category_id = ? ORDER BY id DESC";
@@ -31,7 +31,7 @@ public class ArticleDao {
         return list;
     }
 
-    /** One article, or null if the id doesn't exist. */
+   
     public Article findById(int id) throws SQLException {
         String sql = "SELECT id, category_id, title, summary, content FROM articles WHERE id = ?";
         try (Connection c = DbConnectionManager.getConnection();

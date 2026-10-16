@@ -6,7 +6,7 @@ import java.util.List;
 public class Category {
     private final int id;
     private final String name;
-    private final Integer parentId;                 // null = top-level category
+    private final Integer parentId;                 
     private List<Article> articles = new ArrayList<>();
 
     public Category(int id, String name, Integer parentId) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CategoryDao {
 
-    /** The 4 top-level categories (parent_id is NULL). */
+    
     public List<Category> findRoots() throws SQLException {
         String sql = "SELECT id, name, parent_id FROM categories WHERE parent_id IS NULL ORDER BY id";
         List<Category> list = new ArrayList<>();
@@ -28,7 +28,7 @@ public class CategoryDao {
         return list;
     }
 
-    /** The direct children of one category. */
+   
     public List<Category> findChildren(int parentId) throws SQLException {
         String sql = "SELECT id, name, parent_id FROM categories WHERE parent_id = ? ORDER BY id";
         List<Category> list = new ArrayList<>();

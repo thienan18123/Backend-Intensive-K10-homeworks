@@ -11,7 +11,7 @@ public class NewsService {
     private final CategoryDao categoryDao = new CategoryDao();
     private final ArticleDao articleDao = new ArticleDao();
 
-    /** Homepage: the top-level categories, each filled with its own articles. */
+   
     public List<Category> getHomeCategories() throws SQLException {
         List<Category> roots = categoryDao.findRoots();
         for (Category category : roots) {
