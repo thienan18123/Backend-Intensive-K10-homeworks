@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: productapp-tomcat
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      CLOUD_SQL_INSTANCE: ${CLOUD_SQL_INSTANCE}
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/gcp-credentials.json
+    volumes:
+      - ./secrets/gcp-credentials.json:/secrets/gcp-credentials.json:ro
+    ports:
+      - "${APP_PORT}:8080"

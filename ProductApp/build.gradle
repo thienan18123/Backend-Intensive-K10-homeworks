@@ -1,0 +1,49 @@
+plugins {
+    id 'war'
+    id 'eclipse-wtp'
+}
+
+group = 'com.demo'
+version = '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+      providedCompile 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+
+    // Cloud SQL (PostgreSQL)
+    implementation 'org.postgresql:postgresql:42.7.4'
+    implementation 'com.google.cloud.sql:postgres-socket-factory:1.21.0'
+
+    // JSTL for the JSP view
+    implementation('jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0') {
+        exclude group: 'jakarta.servlet'
+        exclude group: 'jakarta.el'
+    }
+    implementation('org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1') {
+        exclude group: 'jakarta.servlet'
+        exclude group: 'jakarta.el'
+    }
+}
+
+war {
+    archiveFileName = 'ProductApp.war'
+}
+
+eclipse {
+    wtp {
+        facet {
+            facets = []                                      
+            facet name: 'jst.java', version: '21'            
+            facet name: 'jst.web',  version: '6.0'           
+        }
+    }
+}
