@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Build output
+build/
+bin/
+.gradle/
+*.war
+*.class
+
+# Eclipse settings
+.settings/
+.classpath
+.project
+.metadata/
+
+.env
+secrets/
+build/
+.gradle/
