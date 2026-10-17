@@ -46,7 +46,7 @@ public class CategoryDao {
         return list;
     }
 
-    /** One category, or null if the id doesn't exist. */
+   
     public Category findById(int id) throws SQLException {
         String sql = "SELECT id, name, parent_id FROM categories WHERE id = ?";
         try (Connection c = DbConnectionManager.getConnection();
@@ -62,7 +62,7 @@ public class CategoryDao {
 
     private Category map(ResultSet rs) throws SQLException {
         int parent = rs.getInt("parent_id");
-        Integer parentId = rs.wasNull() ? null : parent;   // SQL NULL -> Java null
+        Integer parentId = rs.wasNull() ? null : parent;   
         return new Category(rs.getInt("id"), rs.getString("name"), parentId);
     }
 }
