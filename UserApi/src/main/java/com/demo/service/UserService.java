@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class UserService {
-    private static final Pattern LOGIN_ID = Pattern.compile("[A-Za-z0-9_]{3,50}"); //correct format
+    private static final Pattern LOGIN_ID = Pattern.compile("[A-Za-z0-9_]{3,50}"); //correct format username
     private static final String UNIQUE_VIOLATION = "23505";   //posgre error code
 
     private final UserDao userDao = new UserDao();
