@@ -14,8 +14,8 @@ import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private final transient UserService userService = new UserService();
+
+    private final  UserService userService = new UserService();
 
  
     @Override
