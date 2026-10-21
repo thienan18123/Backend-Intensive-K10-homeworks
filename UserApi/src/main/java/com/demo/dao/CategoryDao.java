@@ -1,6 +1,6 @@
 package com.demo.dao;
 
-import com.demo.db.DbConnectionManager;
+
 import com.demo.model.Category;
 
 import java.sql.Connection;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao {
+	
 
-    
-    public List<Category> findRoots() throws SQLException {
-        String sql = "SELECT id, name, parent_id FROM categories WHERE parent_id IS NULL ORDER BY id";
+    public List<Category> findRoots(Connection c) throws SQLException {
+        String sql = "SELECT id, name, parent_id FROM categories "
+                + "WHERE parent_id IS NULL AND is_visible = TRUE ORDER BY sort_order, id";
         List<Category> list = new ArrayList<>();
-        try (Connection c = DbConnectionManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
+        try (PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 list.add(map(rs));
@@ -27,13 +27,13 @@ public class CategoryDao {
         }
         return list;
     }
+    
 
    
-    public List<Category> findChildren(int parentId) throws SQLException {
-        String sql = "SELECT id, name, parent_id FROM categories WHERE parent_id = ? ORDER BY id";
+    public List<Category> findChildren(Connection c,int parentId) throws SQLException {
+        String sql = "SELECT id, name, parent_id FROM categories WHERE parent_id = ? ";
         List<Category> list = new ArrayList<>();
-        try (Connection c = DbConnectionManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, parentId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -45,12 +45,11 @@ public class CategoryDao {
         }
         return list;
     }
+    
 
-   
-    public Category findById(int id) throws SQLException {
+    public Category findById(Connection c,int id) throws SQLException {
         String sql = "SELECT id, name, parent_id FROM categories WHERE id = ?";
-        try (Connection c = DbConnectionManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? map(rs) : null;

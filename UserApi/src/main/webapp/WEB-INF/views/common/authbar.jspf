@@ -1,0 +1,13 @@
+
+<div>
+    <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            Hello <b><c:out value="${sessionScope.user.name}"/></b>
+            / <a href="${ctx}/logout">LOGOUT</a>
+        </c:when>
+        <c:otherwise>
+            <a href="${ctx}/register">REGISTER</a> / <a href="${ctx}/login">LOGIN</a>
+        </c:otherwise>
+    </c:choose>
+</div>
+<hr>

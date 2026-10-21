@@ -8,8 +8,9 @@
     <title><c:out value="${category.name}"/></title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/authbar.jspf" %>
 
-<%-- Back link: to the parent category, or to the homepage for a top-level category --%>
+
 <c:choose>
     <c:when test="${not empty parent}">
         <a href="${ctx}/category?id=${parent.id}">&laquo; <c:out value="${parent.name}"/></a>

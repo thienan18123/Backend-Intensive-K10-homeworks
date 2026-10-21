@@ -12,13 +12,28 @@ import java.util.List;
 
 public class ArticleDao {
 
-    
-    public List<Article> findByCategory(int categoryId) throws SQLException {
+	
+	public List<Article> findForRootCategories(Connection c) throws SQLException {
+	    String sql = "SELECT id, category_id, title, summary, content FROM articles "
+	               + "WHERE category_id IN (SELECT id FROM categories "
+	               + "                      WHERE parent_id IS NULL AND is_visible = TRUE) ";
+	    List<Article> list = new ArrayList<>();
+	    try (PreparedStatement ps = c.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+	        while (rs.next()) {
+	            list.add(map(rs));
+	        }
+	    } catch (SQLException e) {
+	        throw new SQLException("Failed to load articles of top-level categories", e.getSQLState(), e);
+	    }
+	    return list;
+	}
+	
+    public List<Article> findByCategory(Connection c,int categoryId) throws SQLException {
         String sql = "SELECT id, category_id, title, summary, content FROM articles "
-                   + "WHERE category_id = ? ORDER BY id DESC";
+                   + "WHERE category_id = ? ";
         List<Article> list = new ArrayList<>();
-        try (Connection c = DbConnectionManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, categoryId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -31,11 +46,10 @@ public class ArticleDao {
         return list;
     }
 
-   
-    public Article findById(int id) throws SQLException {
+  
+    public Article findById(Connection c ,int id) throws SQLException {
         String sql = "SELECT id, category_id, title, summary, content FROM articles WHERE id = ?";
-        try (Connection c = DbConnectionManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? map(rs) : null;

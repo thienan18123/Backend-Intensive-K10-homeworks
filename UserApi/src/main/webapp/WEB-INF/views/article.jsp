@@ -8,7 +8,7 @@
     <title><c:out value="${article.title}"/></title>
 </head>
 <body>
-
+<%@ include file="/WEB-INF/views/common/authbar.jspf" %>
 <a href="${ctx}/category?id=${category.id}">&laquo; <c:out value="${category.name}"/></a>
 
 <h1><c:out value="${article.title}"/></h1>

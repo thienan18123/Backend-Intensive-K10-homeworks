@@ -8,6 +8,7 @@
     <title>Trang chủ</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/authbar.jspf" %>
 <h1>Tin tức</h1>
 
 <c:forEach var="cat" items="${categories}">
@@ -30,4 +31,5 @@
     <hr>
 </c:forEach>
 </body>
+
 </html>
