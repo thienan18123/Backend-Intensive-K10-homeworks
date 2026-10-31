@@ -18,6 +18,13 @@ repositories {
 
 dependencies {
       providedCompile 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+      
+      implementation 'com.auth0:java-jwt:4.4.0'
+      implementation 'org.mindrot:jbcrypt:0.4'
+      implementation 'org.json:json:20250517'
+      implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+      implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
+      implementation 'io.jsonwebtoken:jjwt-orgjson:0.12.6'
 
     // Cloud SQL (PostgreSQL)
     implementation 'org.postgresql:postgresql:42.7.4'

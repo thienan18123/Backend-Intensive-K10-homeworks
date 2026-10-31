@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class UserService {
-    private static final Pattern LOGIN_ID = Pattern.compile("[A-Za-z0-9_]{3,50}"); //correct format username
-    private static final String UNIQUE_VIOLATION = "23505";   //posgre error code
+    private static final Pattern LOGIN_ID = Pattern.compile("[A-Za-z0-9_]{3,50}"); 
+    private static final Pattern PREHASH = Pattern.compile("[0-9a-f]{64}");
+    private static final String UNIQUE_VIOLATION = "23505";  
 
     private final UserDao userDao = new UserDao();
 
@@ -30,8 +31,8 @@ public class UserService {
         if (!LOGIN_ID.matcher(loginId).matches()) {
             throw new ValidationException("ID must be 3-50 letters, numbers or underscores.");
         }
-        if (password.length() < 8) {
-            throw new ValidationException("Password must be at least 8 characters.");
+        if (!PREHASH.matcher(password).matches()) {
+            throw new ValidationException("Invalid password data. Please enable JavaScript and try again.");
         }
 
         try {
