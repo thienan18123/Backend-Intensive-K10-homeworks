@@ -1,6 +1,6 @@
 package com.demo.filter;
 
-import com.demo.api.JsonIO;
+import com.demo.controller.JsonIO;
 import com.demo.util.JwtUtil;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

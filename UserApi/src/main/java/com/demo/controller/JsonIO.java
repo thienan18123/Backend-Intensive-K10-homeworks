@@ -1,4 +1,4 @@
-package com.demo.api;
+package com.demo.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
