@@ -90,7 +90,7 @@ public class AuthApiController extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 
-    /** New access token (5 minutes) bound to a new fingerprint cookie. */
+   
     private void sendAccessToken(User user, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JSONObject result = new JSONObject()
                 .put("token", JwtUtil.createToken(user))
