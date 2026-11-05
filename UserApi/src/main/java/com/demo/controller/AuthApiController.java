@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.model.User;
+import com.demo.service.RefreshTokenService;
 import com.demo.service.UserService;
 import com.demo.util.JwtUtil;
 import jakarta.servlet.ServletException;
@@ -18,25 +19,28 @@ import java.sql.SQLException;
 public class AuthApiController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final transient UserService userService = new UserService();
+    private final transient RefreshTokenService refreshService = new RefreshTokenService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String action = req.getPathInfo();                     
-
-        if ("/logout".equals(action)) {
-            FingerprintCookie.clear(req, resp);                 
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            return;
-        }
-
-        JSONObject body = JsonIO.readBody(req);
-        if (body == null) {
-            JsonIO.error(resp, HttpServletResponse.SC_BAD_REQUEST, "Body must be valid JSON");
-            return;
-        }
-
+        String action = req.getPathInfo();
         try {
+          
+            if ("/refresh".equals(action)) {
+                refresh(req, resp);
+                return;
+            }
+            if ("/logout".equals(action)) {
+                logout(req, resp);
+                return;
+            }
+
+            JSONObject body = JsonIO.readBody(req);
+            if (body == null) {
+                JsonIO.error(resp, HttpServletResponse.SC_BAD_REQUEST, "Body must be valid JSON");
+                return;
+            }
             if ("/login".equals(action)) {
                 login(body, req, resp);
             } else if ("/register".equals(action)) {
@@ -56,8 +60,40 @@ public class AuthApiController extends HttpServlet {
             JsonIO.error(resp, HttpServletResponse.SC_UNAUTHORIZED, "Wrong ID or password");
             return;
         }
+        RefreshCookieController.set(req, resp, refreshService.issue(user.getId()));   
+        sendAccessToken(user, req, resp);                                    
+    }
+
+    private void refresh(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+        String token = RefreshCookieController.read(req);
+        RefreshTokenService.Rotation rotation = (token == null) ? null : refreshService.rotate(token);
+        User user = (rotation == null) ? null : userService.findById(rotation.userId());
+        if (user == null) {
+        	RefreshCookieController.clear(req, resp);
+          
+            JsonIO.error(resp, HttpServletResponse.SC_UNAUTHORIZED, "Please log in again");
+            return;
+        }
+        if (rotation.newToken() != null) {
+        	RefreshCookieController.set(req, resp, rotation.newToken());             
+        }
+        sendAccessToken(user, req, resp);
+    }
+
+    private void logout(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        String token = RefreshCookieController.read(req);
+        if (token != null) {
+            refreshService.revoke(token);                                    
+        }
+        RefreshCookieController.clear(req, resp);
+      
+        resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    /** New access token (5 minutes) bound to a new fingerprint cookie. */
+    private void sendAccessToken(User user, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JSONObject result = new JSONObject()
-                .put("token", JwtUtil.createToken(user, FingerprintCookie.issue(req, resp)))
+                .put("token", JwtUtil.createToken(user))
                 .put("tokenType", "Bearer")
                 .put("expiresIn", JwtUtil.ttlSeconds());
         JsonIO.write(resp, HttpServletResponse.SC_OK, result);

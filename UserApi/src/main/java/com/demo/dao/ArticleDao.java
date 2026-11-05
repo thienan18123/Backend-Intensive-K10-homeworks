@@ -1,6 +1,5 @@
 package com.demo.dao;
 
-import com.demo.db.DbConnectionManager;
 import com.demo.model.Article;
 
 import java.sql.Connection;

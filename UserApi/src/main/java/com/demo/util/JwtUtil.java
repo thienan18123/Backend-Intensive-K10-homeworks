@@ -15,7 +15,7 @@ import java.util.Date;
 
 
 public final class JwtUtil {
-    private static final long TTL_SECONDS = 15 * 60;            
+    private static final long TTL_SECONDS = 5 * 60;            
     private static final SecretKey KEY = loadKey();
 
  
@@ -28,13 +28,12 @@ public final class JwtUtil {
     public static long ttlSeconds() { return TTL_SECONDS; }
 
    
-    public static String createToken(User user, String fingerprintHash) {
+    public static String createToken(User user) {
         Instant now = Instant.now();
         return Jwts.builder()
                 .subject(String.valueOf(user.getId()))          
                 .claim("loginId", user.getLoginId())
-                .claim("name", user.getName())
-                .claim("fgp", fingerprintHash)                
+                .claim("name", user.getName())               
                 .issuedAt(Date.from(now))                       
                 .expiration(Date.from(now.plusSeconds(TTL_SECONDS)))   
                 .signWith(KEY, Jwts.SIG.HS256)                  

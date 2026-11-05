@@ -10,13 +10,40 @@ async function getJson(path) {
 }
 
 
-async function authFetch(path, options = {}) {
-    const headers = { ...(options.headers || {}), "Authorization": "Bearer " + getToken() };
-    const resp = await fetch("api" + path, { ...options, headers });
-    if (resp.status === 401) {
-        sessionStorage.removeItem("jwt");
-        renderAuthBar();
+let refreshing = null;    
+
+
+function refreshToken() {
+    if (!refreshing) {
+        refreshing = fetch("api/auth/refresh", { method: "POST" })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => {
+                if (data) sessionStorage.setItem("jwt", data.token);
+                else sessionStorage.removeItem("jwt");
+                return Boolean(data);
+            })
+            .catch(() => false)
+            .finally(() => { refreshing = null; });
     }
+    return refreshing;
+}
+
+
+async function ensureToken() {
+    return getToken() ? true : refreshToken();
+}
+
+
+async function authFetch(path, options = {}) {
+    const send = () => fetch("api" + path, {
+        ...options,
+        headers: { ...(options.headers || {}), "Authorization": "Bearer " + getToken() }
+    });
+    let resp = await send();
+    if (resp.status === 401 && await refreshToken()) {
+        resp = await send();                                
+    }
+    if (resp.status === 401) sessionStorage.removeItem("jwt");
     return resp;
 }
 
@@ -54,16 +81,22 @@ function articleList(articles) {
 
 async function renderAuthBar() {
     const bar = $("authbar");
-    if (getToken()) {
+    if (await ensureToken()) {
         const resp = await authFetch("/me");
         if (resp.ok) {
             const me = await resp.json();
             const logout = button("LOGOUT", async () => {
+                await fetch("api/auth/logout", { method: "POST" });  
                 sessionStorage.removeItem("jwt");
-                await fetch("api/auth/logout", { method: "POST" });   
                 location.href = "home.html";
             });
-            bar.replaceChildren("Hello ", el("b", me.name), " / ", link("saved.html", "Saved list"), " / ", logout);
+            const logoutAll = button("Log out everywhere", async () => {
+                await authFetch("/sessions", { method: "DELETE" });   
+                sessionStorage.removeItem("jwt");
+                location.href = "home.html";
+            });
+            bar.replaceChildren("Hello ", el("b", me.name), " / ", link("saved.html", "Saved list"),
+                                " / ", logout, " ", logoutAll);
             return;
         }
     }
@@ -73,6 +106,7 @@ async function renderAuthBar() {
 
 async function showHome() {
     const categories = await getJson("/news/home");
+    if (!categories) throw new Error("Cannot load news (API /api/news/home not found)");   
     const box = $("content");
     box.replaceChildren(el("h1", "News"));
     for (const c of categories) {
@@ -81,7 +115,6 @@ async function showHome() {
         box.append(h2, articleList(c.articles));
     }
 }
-
 async function showCategory(id) {
     const data = await getJson("/news/categories/" + encodeURIComponent(id));
     if (!data) return notFound();
@@ -112,7 +145,7 @@ async function showArticle(id) {
 
     const box = $("content");
     box.replaceChildren(crumbs, el("h1", a.title));
-    if (getToken()) box.append(await saveButton(a.id));    
+	if (await ensureToken()) box.append(await saveButton(a.id));      
     box.append(el("p", a.summary || ""));
     for (const paragraph of (a.content || "").split(/\n\s*\n/)) { 
         if (paragraph.trim()) box.append(el("p", paragraph.trim()));
@@ -141,7 +174,7 @@ async function saveButton(articleId) {
 async function showSaved() {
     document.title = "Saved list";
     const box = $("content");
-    if (!getToken()) {
+    if (!(await ensureToken())) {
         const p = el("p", "Please ");
         p.append(link("login.html", "log in"), " to see your saved list.");
         box.replaceChildren(el("h1", "Saved list"), p);

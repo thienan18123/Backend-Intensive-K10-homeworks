@@ -56,4 +56,9 @@ public class UserService {
         }
         return user.withoutPassword();
     }
+    
+    
+    public User findById(int id) throws SQLException {
+        return userDao.findById(id);
+    }
 }

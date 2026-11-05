@@ -27,6 +27,20 @@ public class UserDao {
             throw new SQLException("Failed to load user " + loginId, e.getSQLState(), e);
         }
     }
+    
+    public User findById(int id) throws SQLException {
+        String sql = "SELECT id, login_id, name FROM users WHERE id = ?";
+        try (Connection c = DbConnectionManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                return new User(rs.getInt("id"), rs.getString("login_id"), rs.getString("name"), null);
+            }
+        }
+    }
 
    
     public void insert(String loginId, String name, String passwordHash) throws SQLException {
