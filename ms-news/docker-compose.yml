@@ -1,0 +1,21 @@
+services:
+  ms-news:
+    build:
+      context: ..
+      dockerfile: ms-news/Dockerfile
+    container_name: ms-news
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/newsdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      APP_JWT_SECRET: ${JWT_SECRET}
+      APP_AUTH_MODE: lib
+      APP_AUTH_LOGIN_URL: http://ms-login:8081
+    networks:
+      - ms-net
+
+networks:
+  ms-net:
+    external: true
